@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'services/db.php';
 $id = $_GET['id'];
 
 $conn->query("DELETE FROM karyawan WHERE id=$id");
