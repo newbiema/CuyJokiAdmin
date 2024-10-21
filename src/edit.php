@@ -1,23 +1,36 @@
 <?php include 'services/db.php'; ?>
 <?php
 $id = $_GET['id'];
+// Mengambil nilai 'id' dari parameter URL untuk mengetahui karyawan mana yang akan diedit.
+
 $result = $conn->query("SELECT * FROM karyawan WHERE id=$id");
+// Menjalankan query untuk mengambil data karyawan dari database berdasarkan 'id' yang diterima.
+
 $karyawan = $result->fetch_assoc();
+// Mengambil hasil query dalam bentuk array asosiatif, yang kemudian disimpan dalam variabel $karyawan.
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Mengecek apakah form disubmit menggunakan metode POST.
+
     $nama = $_POST['nama'];
     $posisi = $_POST['posisi'];
     $gaji = $_POST['gaji'];
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $kontak = $_POST['kontak'];
+    // Mengambil data yang dikirim dari form edit seperti nama, posisi, gaji, tanggal masuk, dan kontak.
 
     $sql = "UPDATE karyawan SET nama='$nama', posisi='$posisi', gaji='$gaji', 
             tanggal_masuk='$tanggal_masuk', kontak='$kontak' WHERE id=$id";
+    // Membuat query SQL untuk meng-update data karyawan berdasarkan 'id'. Data baru diambil dari form yang diisi pengguna.
+
     $conn->query($sql);
+    // Menjalankan query SQL untuk memperbarui data di database.
 
     header('Location: index.php');
+    // Setelah data berhasil diperbarui, pengguna akan diarahkan kembali ke halaman index.php.
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

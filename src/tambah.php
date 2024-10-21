@@ -2,19 +2,27 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Mengecek apakah form dikirim menggunakan metode POST.
+    
     $nama = $_POST['nama'];
     $posisi = $_POST['posisi'];
     $gaji = $_POST['gaji'];
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $kontak = $_POST['kontak'];
+    // Mengambil data dari form yang dikirim, seperti nama, posisi, gaji, tanggal masuk, dan kontak.
 
     $sql = "INSERT INTO karyawan (nama, posisi, gaji, tanggal_masuk, kontak) 
             VALUES ('$nama', '$posisi', '$gaji', '$tanggal_masuk', '$kontak')";
+    // Membuat query SQL untuk memasukkan data ke dalam tabel 'karyawan'. Data diambil dari variabel yang didapat dari form.
+
     $conn->query($sql);
+    // Menjalankan query SQL untuk memasukkan data ke database.
 
     header('Location: index.php');
+    // Mengarahkan kembali ke halaman index.php setelah data berhasil disimpan.
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -14,6 +14,7 @@
         <div class="flex justify-end mb-4">
             <a href="tambah.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200">Tambah Karyawan</a>
         </div>
+        
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white rounded-lg shadow-md">
                 <thead class="bg-blue-600 text-white uppercase text-sm">
@@ -28,7 +29,9 @@
                 </thead>
                 <tbody>
                 <?php
+                // Mengambil semua data karyawan di database menggunakan query SELECT * FROM karyawan
                 $result = $conn->query("SELECT * FROM karyawan");
+                //  Looping data hasil query untuk ditampilkan di baris tabel
                 while ($row = $result->fetch_assoc()): ?>
                     <tr class="hover:bg-gray-100 transition duration-200">
                         <td class="border-b px-6 py-4"><?php echo $row['nama']; ?></td>
