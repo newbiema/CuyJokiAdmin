@@ -1,28 +1,26 @@
 <?php include 'services/db.php'; ?>
 
 <?php
+$success = false; // Variabel untuk mengecek apakah data berhasil disimpan
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Mengecek apakah form dikirim menggunakan metode POST.
-    
     $nama = $_POST['nama'];
     $posisi = $_POST['posisi'];
     $gaji = $_POST['gaji'];
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $kontak = $_POST['kontak'];
-    // Mengambil data dari form yang dikirim, seperti nama, posisi, gaji, tanggal masuk, dan kontak.
 
-    $sql = "INSERT INTO karyawan (nama, posisi, gaji, tanggal_masuk, kontak) 
-            VALUES ('$nama', '$posisi', '$gaji', '$tanggal_masuk', '$kontak')";
-    // Membuat query SQL untuk memasukkan data ke dalam tabel 'karyawan'. Data diambil dari variabel yang didapat dari form.
+    // Memastikan semua data telah diisi
+    if ($nama && $posisi && $gaji && $tanggal_masuk && $kontak) {
+        $sql = "INSERT INTO karyawan (nama, posisi, gaji, tanggal_masuk, kontak) 
+                VALUES ('$nama', '$posisi', '$gaji', '$tanggal_masuk', '$kontak')";
 
-    $conn->query($sql);
-    // Menjalankan query SQL untuk memasukkan data ke database.
-
-    header('Location: index.php');
-    // Mengarahkan kembali ke halaman index.php setelah data berhasil disimpan.
+        if ($conn->query($sql) === TRUE) {
+            $success = true; // Menandai bahwa data berhasil disimpan
+        }
+    }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Tambah Karyawan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-8">
@@ -61,4 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     </div>
 </body>
+
+<?php if ($success): ?>
+    <script>
+        // Menampilkan SweetAlert dan delay sebelum redirect
+        Swal.fire({
+            title: "Good job!",
+            text: "Data berhasil ditambahkan!",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            setTimeout(function(){
+                window.location.href = "index.php";
+            }, 1000); // Delay 1 detik sebelum redirect
+        });
+    </script>
+<?php endif; ?>
 </html>

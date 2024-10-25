@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Karyawan Cuy Joki</title>
     <link rel="stylesheet" href="css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-8">
@@ -41,7 +42,8 @@
                         <td class="border-b px-6 py-4"><?php echo $row['kontak']; ?></td>
                         <td class="border-b px-6 py-4 text-center">
                             <a href="edit.php?id=<?php echo $row['id']; ?>" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-200">Edit</a>
-                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200 ml-2">Hapus</a>
+                            <a href="#" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200 ml-2" onclick="Hapus(event, <?php echo $row['id']; ?>)">Hapus</a>
+
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -49,5 +51,28 @@
             </table>
         </div>
     </div>
+<script>
+  
+    function Hapus(event, id) {
+        event.preventDefault();  // Mencegah navigasi default
+
+        Swal.fire({
+            title: "Apakah kamu yakin?",
+            text: "Data ini akan dihapus secara permanen!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika dikonfirmasi, arahkan ke halaman delete.php dengan id
+                window.location.href = "delete.php?id=" + id;
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
